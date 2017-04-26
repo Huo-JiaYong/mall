@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="org.yong.beauty.cache" />
+	<context:component-scan base-package="org.yong.mall.cache" />
 	<context:property-placeholder location="classpath:redis.properties"
 		ignore-unresolvable="true" />
 

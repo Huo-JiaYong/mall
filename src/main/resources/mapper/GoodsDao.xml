@@ -2,47 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.yong.mall.dao.GoodsDao">
 
-	<select id="queryAll" resultType="GoodsInfo">
-		SELECT * 
+	<select id="listGoods" resultType="GoodsInfo">
+		SELECT *
 		FROM goods_info
-		LIMIT #{offset},#{limit} 
+		LIMIT #{offset},#{limit}
 	</select>
-	
-	<select id="queryById" resultType="GoodsInfo">
+
+	<select id="getGoodsById" resultType="GoodsInfo">
 		SELECT *
 		FROM goods_info
 		WHERE id = #{id}
 	</select>
-	
-	<insert id="add" parameterType="GoodsInfo">
-		INSERT INTO goods_info(name,title,price,number,introduce) 
-		VALUES (#{name},#{title},#{price},#{number},#{introduce})
+
+	<insert id="saveGoods" parameterType="GoodsInfo">
+		INSERT INTO
+		goods_info(name,title,price,number,introduce,img)
+		VALUES (#{name},#{title},#{price},#{number},#{introduce},#{img})
 	</insert>
-	
-	<delete id="remove">
+
+	<delete id="removeGoods">
 		DELETE FROM goods_info
 		WHERE id = #{id}
 	</delete>
-	
-	<update id="change" parameterType="GoodsInfo">
+
+	<update id="updateGoods" parameterType="GoodsInfo">
 		UPDATE goods_info
-		SET 
-		<if test="name != null">
-			name = #{name}
-		</if>
-		<if test="title != null">
-			title = #{title}
-		</if>
-		<if test="price != price">
-			price = #{price}
-		</if>
-		<if test="number != null">
-			number = #{number}
-		</if>
-		<if test="introduce != null">
-			introduce = #{introduce}
-		</if>
-		WEHRE id = #{id}
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="price != null and price != 0">
+				price = #{price},
+			</if>
+			<if test="number != null and number != 0">
+				number = #{number},
+			</if>
+			<if test="introduce != null">
+				introduce = #{introduce},
+			</if>
+			<if test="img != null">
+				img = #{img},
+			</if>
+		</set>
+		WHERE id = #{id}
 	</update>
 
 </mapper>

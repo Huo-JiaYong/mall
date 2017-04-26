@@ -23,3 +23,6 @@ INSERT INTO goods_info(name,title,number,price,introduce) VALUES
 ('迪兰 RX 470D','史上最具性价比的GPU',20,1099.00,'可以开核到470，超高性价比'),
 ('AMD G4560 处理器','有这个型号么',10,338.00,'农企日常翻身'),
 ('蓝宝石 RX 470D','史上最具性价比的GPU',20,1149.00,'可以开核到470，超高性价比');
+
+--新增照片字段
+ALTER TABLE goods_info ADD img varchar(200) COMMENT '商品图片';

@@ -14,7 +14,7 @@ import org.yong.mall.utils.ProtoStuffSerializeUtil;
 @Component
 public class RedisCache {
 
-	public final static String CACHENAME = "cache";
+	public final static String CACHENAME = "mall";
 	public final static int CACHETIME = 60;
 
 	@Autowired

@@ -9,11 +9,11 @@ public class BaseResult<T> implements Serializable {
 
 	private T data;
 
-	private String error;
+	private String info;
 
-	public BaseResult(boolean success, String error) {
+	public BaseResult(boolean success, String info) {
 		this.success = success;
-		this.error = error;
+		this.info = info;
 	}
 
 	public BaseResult(boolean success, T data) {
@@ -33,12 +33,12 @@ public class BaseResult<T> implements Serializable {
 		this.data = data;
 	}
 
-	public String getError() {
-		return error;
+	public String getInfo() {
+		return info;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 	public void setSuccess(boolean success) {
@@ -47,7 +47,7 @@ public class BaseResult<T> implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BaseResult [success=" + success + ", data=" + data + ", error=" + error + "]";
+		return "BaseResult [success=" + success + ", data=" + data + ", info=" + info + "]";
 	}
 
 }
