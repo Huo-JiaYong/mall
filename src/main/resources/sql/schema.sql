@@ -26,3 +26,67 @@ INSERT INTO goods_info(name,title,number,price,introduce) VALUES
 
 --新增照片字段
 ALTER TABLE goods_info ADD img varchar(200) COMMENT '商品图片';
+
+--2.用户表
+CREATE TABLE user_info(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `phone` varchar(11) NOT NULL COMMENT '电话',
+    `name` varchar(20) NOT NULL COMMENT '账号',
+    `password` varchar(100) NOT NULL COMMENT '密码',
+    PRIMARY KEY (`id`),
+    KEY idx_phone(`phone`),
+    KEY idx_user_name(`name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+INSERT INTO user_info(phone,name,password) VALUES ('15181010990','Yong','e10adc3949ba59abbe56e057f20f883e');
+INSERT INTO user_info(phone,name,password) VALUES ('15181010999','Lee','e10adc3949ba59abbe56e057f20f883e');
+
+--3.角色表
+CREATE TABLE role_info(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+    `name` varchar(20) NOT NULL COMMENT '角色名称',
+    `introduce` varchar(100) NOT NULL COMMENT '简介',
+    PRIMARY KEY (`id`),
+    KEY idx_name(`name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+INSERT INTO role_info(name,introduce) VALUES ('admin','系统管理员'); 
+INSERT INTO role_info(name,introduce) VALUES ('guest','工作人员'); 
+
+--4.系统模块
+CREATE TABLE sys_module(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '模块ID',
+    `name` varchar(20) NOT NULL COMMENT '模块名称',
+    `link` varchar(255) NOT NULL COMMENT 'URL链接',
+    `number` int NOT NULL COMMENT '顺序',
+    PRIMARY KEY (`id`),
+    KEY idx_name(`name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='系统模块';
+INSERT INTO sys_module(name,link,number) VALUES ('用户管理','admin/user/list',1);
+INSERT INTO sys_module(name,link,number) VALUES ('角色管理','admin/user/role/list',2);
+INSERT INTO sys_module(name,link,number) VALUES ('商品管理','admin/goods/list',3);
+
+--5.角色权限关联表
+CREATE TABLE role_module(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '关联id',
+    `role_id` bigint NOT NULL COMMENT '角色id',
+    `module_id` bigint NOT NULL COMMENT '模块id',
+    PRIMARY KEY (`id`),
+    KEY idx_role_id(`role_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+INSERT INTO role_module(role_id,module_id) VALUES (1000,1000); 
+INSERT INTO role_module(role_id,module_id) VALUES (1000,1001); 
+INSERT INTO role_module(role_id,module_id) VALUES (1000,1002); 
+INSERT INTO role_module(role_id,module_id) VALUES (1001,1002); 
+
+--6.用户角色关联表
+CREATE TABLE user_role(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '关联id',
+    `user_id` bigint NOT NULL COMMENT '用户id',
+    `role_id` bigint NOT NULL COMMENT '角色id',
+    PRIMARY KEY (`id`),
+    KEY idx_user_id(`user_id`),
+    KEY idx_role_id(`role_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
+INSERT INTO user_role(user_id,role_id) VALUES (1000,1000);
+INSERT INTO user_role(user_id,role_id) VALUES (1001,1001);
+
+
