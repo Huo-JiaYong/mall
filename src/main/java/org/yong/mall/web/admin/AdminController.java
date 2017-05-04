@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.yong.mall.cache.RedisCache;
 import org.yong.mall.dto.BaseResult;
 import org.yong.mall.entity.AdminUserInfo;
 import org.yong.mall.entity.SystemModule;
@@ -20,6 +21,9 @@ import org.yong.mall.service.SystemModuleService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    @Autowired
+    RedisCache redis;
 
     @Autowired
     AdminUserService adminUserService;
@@ -42,6 +46,14 @@ public class AdminController {
         }
         session.setAttribute("adminUser", info);
         return new BaseResult<>(true, "登录成功");
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String userLogout(HttpSession session) {
+        AdminUserInfo info = (AdminUserInfo) session.getAttribute("adminUser");
+        redis.deleteCacheWithPattern(RedisCache.CACHENAME + "|" + info.getPhone() + "|*");
+        session.removeAttribute("adminUser");
+        return "redirect:/admin/login";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)

@@ -21,7 +21,7 @@ public class SystemModuleServiceImpl implements SystemModuleService {
 
     @Override
     public List<SystemModule> listModuleWithUser(AdminUserInfo user) {
-        String key = RedisCache.CACHENAME + "|module|" + user.getPhone();
+        String key = RedisCache.CACHENAME + "|" + user.getPhone() + "|module";
         List<SystemModule> modules = redis.getListCache(key, SystemModule.class);
         if (modules == null || modules.isEmpty()) {
             modules = dao.listModuleWithUser(user.getId());

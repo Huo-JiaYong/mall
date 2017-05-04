@@ -33,4 +33,11 @@
 	<context:component-scan base-package="org.yong.mall.aop" />
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <bean class="org.yong.mall.interceptor.AdminInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

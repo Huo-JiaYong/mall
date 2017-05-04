@@ -15,7 +15,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="pull-right">
-					<a href="<%=path%>/admin/goods" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;新增商品</a>
+					<a href="<%=path%>admin/goods" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;新增商品</a>
 				</div>
 				<table class="table">
 					<thead>
@@ -41,7 +41,7 @@
 								<td><fmt:formatDate value="${info.gmtCreate}" pattern="MM-dd hh:mm" /></td>
 								<td><fmt:formatDate value="${info.gmtModified}" pattern="MM-dd hh:mm" /></td>
 								<td>
-								    <a href="<%=path%>/admin/goods/${info.id}" class="btn btn-info">修改</a>
+								    <a href="<%=path%>admin/goods/${info.id}" class="btn btn-info">修改</a>
 								    <a data-value="${info.id }" href="javascript:;" class="btn btn-danger">删除</a>
 								</td>
 							</tr>
@@ -55,7 +55,7 @@
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/layer/3.0/layer.min.js"></script>
-	<script src="<%=path%>/resource/js/handler.js"></script>
+	<script src="<%=path%>/resource/js/goods-list.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			handler.init({});

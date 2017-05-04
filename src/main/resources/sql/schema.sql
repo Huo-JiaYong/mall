@@ -64,14 +64,14 @@ INSERT INTO sys_module(name,link,number) VALUES ('用户管理','admin/user/list
 INSERT INTO sys_module(name,link,number) VALUES ('角色管理','admin/user/role/list',2);
 INSERT INTO sys_module(name,link,number) VALUES ('商品管理','admin/goods/list',3);
 
---5.角色权限关联表
+--5.角色模块关联表
 CREATE TABLE role_module(
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '关联id',
     `role_id` bigint NOT NULL COMMENT '角色id',
     `module_id` bigint NOT NULL COMMENT '模块id',
     PRIMARY KEY (`id`),
     KEY idx_role_id(`role_id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色模块关联表';
 INSERT INTO role_module(role_id,module_id) VALUES (1000,1000); 
 INSERT INTO role_module(role_id,module_id) VALUES (1000,1001); 
 INSERT INTO role_module(role_id,module_id) VALUES (1000,1002); 
@@ -89,4 +89,25 @@ CREATE TABLE user_role(
 INSERT INTO user_role(user_id,role_id) VALUES (1000,1000);
 INSERT INTO user_role(user_id,role_id) VALUES (1001,1001);
 
+--7.系统权限表
+CREATE TABLE operation_auth(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '权限id',
+    `name` varchar(20) NOT NULL COMMENT '权限名称',
+    PRIMARY KEY (`id`),
+    KEY idx_name(`name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='权限表';
+INSERT INTO operation_auth(name) VALUES ('新增商品');
+INSERT INTO operation_auth(name) VALUES ('修改商品');
+INSERT INTO operation_auth(name) VALUES ('删除商品');
 
+--8.角色权限关联表
+CREATE TABLE role_auth(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '权限id',
+    `role_id` bigint NOT NULL COMMENT '角色id',
+    `auth_id` bigint NOT NULL COMMENT '权限id',
+    PRIMARY KEY(`id`),
+    KEY indx_role_id(`role_id`),
+    KEY indx_auth_id(`auth_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+INSERT INTO role_auth(role_id,auth_id) VALUES (1000,1000);
+INSERT INTO role_auth(role_id,auth_id) VALUES (1000,1001);

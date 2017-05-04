@@ -14,9 +14,10 @@
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
 				<h2>商品详情</h2>
+				<span class="text-danger">${errorMsg}</span>
 			</div>
 			<div class="panel-body">
-				<form action="<%=path%>/admin/goods" method="POST" id="goods-from" role="form">
+				<form action="<%=path%>/admin/goods" method="POST" id="goods-form" role="form">
 					<div class="form-group">
 						<input type="text" name="name" value="${info.name}" class="form-control" placeholder="请输入商品名称" />
 					</div>
@@ -43,7 +44,7 @@
 					</div>
 					<input type="hidden" name="img" value="${info.img}" />
 					<div class="pull-right">
-						<input type="submit" class="btn btn-success" value="提交" /> 
+						<input id="btn-submit" type="button" class="btn btn-success" value="提交" /> 
 						<a href="javascript:history.go(-1);" class="btn btn-default">返回</a>
 					</div>
 				</form>
@@ -55,27 +56,12 @@
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.min.js"></script>
+    <script src="https://cdn.bootcss.com/layer/3.0/layer.min.js"></script>
+    <script src="<%=path%>/resource/js/goods-info.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$('#goods-img').fileinput({
-				language : 'zh',
-				enctype : 'multipart/form-data',
-				uploadUrl : '../upload/img',
-				allowedFileExtensions : [ 'jpg', 'gif', 'jpeg', 'png' ],
-				initialCaption : '请选择商品图片',
-				maxFileCount : 10
-			});
-			$('#goods-img').on('fileuploaded',
-					function(event, data, previewId, index) {
-						$("input[name='img']").val(data.response.info);
-						// $('#service-img').attr('src','../' + data.response.info);
-					});
-			
-			// TODO 判断新增还是修改
-			if($('input[name="name"]').val()){
-				$('#goods-from').attr('action', "<%=path%>/admin/goods/${info.id}")
-				                .attr('method', 'PUT');
-			}
+			var goodsId = '${info.id}';
+		    info.init(goodsId);
 		});
 	</script>
 </body>

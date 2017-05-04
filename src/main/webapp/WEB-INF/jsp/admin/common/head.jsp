@@ -14,7 +14,6 @@
 				<c:forEach var="module" items="${modules}">
 					<li><a href="<%=path%>${module.link}">${module.name}</a></li>
 				</c:forEach>
-
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
@@ -27,7 +26,7 @@
 				    <ul class="dropdown-menu">
 				        <li><a href="">我的资料</a></li>
 				        <li><a href="">申请权限</a></li>
-				        <li><a href="">退出</a></li>
+				        <li><a href="<%=path%>admin/logout">退出</a></li>
 				    </ul>
 				</li>
 			</ul>

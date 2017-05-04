@@ -2,6 +2,8 @@ package org.yong.mall.web.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.yong.mall.dto.BaseResult;
+import org.yong.mall.entity.AdminUserInfo;
 import org.yong.mall.entity.GoodsInfo;
+import org.yong.mall.service.AuthorityService;
 import org.yong.mall.service.GoodsService;
 
 @Controller
@@ -19,6 +23,9 @@ public class AdminGoodsController {
 
     @Autowired
     GoodsService goodsService;
+
+    @Autowired
+    AuthorityService authorityService;
 
     @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
     public String listGoods(Model model, Integer offset, Integer limit) {
@@ -37,21 +44,32 @@ public class AdminGoodsController {
         return "/admin/goods_info";
     }
 
-    @RequestMapping(value = "/goods/{id}", method = RequestMethod.PUT)
-    public String updateGoods(@PathVariable("id") Long id, GoodsInfo info) {
+    @RequestMapping(value = "/goods/{id}", method = RequestMethod.PUT, produces = { "application/json;charset=utf8" })
+    @ResponseBody
+    public BaseResult<String> updateGoods(HttpSession session, @PathVariable("id") Long id, GoodsInfo info,
+            Model model) {
+        // TODO 权限检查
+        AdminUserInfo userInfo = (AdminUserInfo) session.getAttribute("adminUser");
+        if (!authorityService.checkUserAuthority(userInfo, "修改商品")) {
+            return new BaseResult<>(false, "无权执行此操作，请联系管理员");
+        }
         info.setId(id);
         boolean result = goodsService.updateGoods(info);
         if (result) {
-            return "redirect:/admin/goods/list";
+            return new BaseResult<>(true, "");
         }
-        return "redirect:/admin/goods/" + info.getId();
+        return new BaseResult<>(false, "参数错误或系统故障");
     }
 
     @RequestMapping(value = "/goods/{id}", method = RequestMethod.DELETE, produces = {
             "application/json;charset=utf-8" })
     @ResponseBody
-    public BaseResult<String> deleteGoods(@PathVariable("id") Long id) {
+    public BaseResult<String> deleteGoods(HttpSession session, @PathVariable("id") Long id) {
         // TODO 权限检查
+        AdminUserInfo userInfo = (AdminUserInfo) session.getAttribute("adminUser");
+        if (!authorityService.checkUserAuthority(userInfo, "删除商品")) {
+            return new BaseResult<>(false, "无权执行此操作，请联系管理员");
+        }
         boolean success = goodsService.removeGoods(id);
         if (success) {
             return new BaseResult<>(true, "删除成功");
@@ -64,12 +82,18 @@ public class AdminGoodsController {
         return "/admin/goods_info";
     }
 
-    @RequestMapping(value = "/goods", method = RequestMethod.POST)
-    public String saveGoods(GoodsInfo info) {
+    @RequestMapping(value = "/goods", method = RequestMethod.POST, produces = { "application/json;charset=utf8" })
+    @ResponseBody
+    public BaseResult<String> saveGoods(HttpSession session, GoodsInfo info) {
+        // TODO 权限检查
+        AdminUserInfo userInfo = (AdminUserInfo) session.getAttribute("adminUser");
+        if (!authorityService.checkUserAuthority(userInfo, "新增商品")) {
+            return new BaseResult<>(false, "无权执行此操作，请联系管理员");
+        }
         boolean result = goodsService.saveGoods(info);
         if (result) {
-            return "redirect:/admin/goods/list";
+            return new BaseResult<>(true, "");
         }
-        return "redirect:/admin/goods";
+        return new BaseResult<>(false, "新增失败 囧..");
     }
 }

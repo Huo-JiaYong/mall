@@ -28,7 +28,7 @@
 					<tbody>
 						<c:forEach var="info" items="${infos}">
 							<tr>
-								<td><img src="<%=path%>/${info.img}" alt="${info.img}"></img></td>
+								<td><img src="<%=path%>${info.img}" alt="${info.img}"></img></td>
 								<td>${info.name}</td>
 								<td>${info.title}</td>
 								<td><fmt:formatNumber value="${info.price}" type="currency" pattern="￥.##" /></td>

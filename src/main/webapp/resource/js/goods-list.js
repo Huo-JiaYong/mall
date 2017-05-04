@@ -10,10 +10,16 @@ var handler = {
 			$.ajax({
 				url : handler.URL.single(gid),
 				type : 'DELETE',
-				success : function(data){
-					if(data.success){
-						layer.msg('删除成功',{time:1500});
+				success : function(data) {
+					if (data.success) {
+						layer.msg('删除成功', {
+							time : 2000
+						});
 						window.location.reload();
+					} else {
+						layer.msg(data.info, {
+							time : 2000
+						});
 					}
 				}
 			});
